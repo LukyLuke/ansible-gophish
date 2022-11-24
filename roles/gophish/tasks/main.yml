@@ -1,0 +1,150 @@
+---
+
+- name: Install prerequisites
+  package:
+    name:
+      - python3-pip
+      - grep
+      - coreutils
+      - libcap2-bin
+      - unzip
+    state: present
+    update_cache: yes
+  tags:
+    - system
+    - gophish
+
+- name: Add System-Group
+  group:
+    name: "{{ gophish_user }}"
+    system: yes
+    state: present
+  tags:
+    - system
+    - gophish
+
+- name: Add System-User
+  user:
+    name: "{{ gophish_user }}"
+    group: "{{ gophish_user }}"
+    system: yes
+    state: present
+  tags:
+    - system
+    - gophish
+
+- name: Log Path {{ gophish_logs }}
+  file:
+    state: directory
+    path: "{{ gophish_logs }}"
+    owner: "{{ gophish_user }}"
+    group: "{{ gophish_user }}"
+    mode: 0740
+  tags:
+    - gophish
+
+- name: Check download
+  stat:
+    path: "{{ gophish_download }}"
+  register: zip
+  tags:
+    - gophish
+
+- name: Download
+  get_url:
+    url: "{{ gophish_download_url }}"
+    dest: "{{ gophish_download }}"
+    owner: "{{ gophish_user }}"
+    group: "{{ gophish_user }}"
+    mode: 0640
+  when: not zip.stat.exists
+  tags:
+    - gophish
+
+- name: Check installation
+  stat:
+    path: "{{ gophish_destination }}/gophish"
+  register: installed
+  tags:
+    - gophish
+
+- name: Unpack
+  unarchive:
+    src: "{{ gophish_download }}"
+    dest: "{{ gophish_destination }}"
+    owner: "{{ gophish_user }}"
+    group: "{{ gophish_user }}"
+    remote_src: Yes
+    mode: 0740
+  when: not installed.stat.exists
+  tags:
+    - gophish
+
+- name: Ensure ownership
+  file:
+    path: "{{ gophish_destination }}"
+    owner: "{{ gophish_user }}"
+    group: "{{ gophish_user }}"
+    recurse: True
+  tags:
+    - gophish
+
+- name: Ensure permission
+  file:
+    path: "{{ gophish_destination }}/gophish"
+    mode: 0740
+  tags:
+    - gophish
+
+- name: Setup configuration file
+  template:
+    src: "config.json.j2"
+    dest: "{{ gophish_destination }}/config.json"
+    owner: "{{ gophish_user }}"
+    group: "{{ gophish_user }}"
+    mode: 0640
+  notify:
+    - Reload gophish
+  tags:
+    - gophish
+
+- name: Setup systemd configuration
+  template:
+    src: "gophish.service.j2"
+    dest: "/etc/systemd/system/gophish.service"
+    mode: 0644
+  notify:
+    - Reload systemd
+  tags:
+    - gophish
+
+- name: Flush all handlers
+  meta: flush_handlers
+
+- name: Ensure gophish is enabled and started
+  service:
+    name: gophish.service
+    state: started
+    enabled: yes
+
+- name: Check for initially set admin password
+  shell:
+    cmd: |
+      grep 'Please login with the username admin' /var/log/gophish/gophish*.log |
+      tail -1 | cut -d = -f 4 | tr -d \"
+  retries: 10
+  delay: 10
+  changed_when: False
+  ignore_errors: yes
+  register: gophish_log
+  until: gophish_log.stdout | length > 0
+
+- name: "{{ gophish_log.stdout }}. You will be prompted to change this temporary password."
+  debug:
+    msg: "{{ gophish_log.stdout }}"
+
+
+
+
+
+

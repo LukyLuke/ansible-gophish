@@ -1,0 +1,10 @@
+---
+
+- name: check reboot Server
+  ansible.builtin.stat:
+    path: /var/run/reboot-required
+  notify:
+    - reboot Server
+
+- name: reboot Server
+  ansible.builtin.reboot:

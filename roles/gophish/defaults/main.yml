@@ -1,0 +1,10 @@
+---
+
+gophish_version: 0.11.0
+gophish_platform: linux
+gophish_arch: 64bit
+gophish_user: "gophish"
+gophish_download_url: "https://github.com/gophish/gophish/releases/download/v{{ gophish_version }}/gophish-v{{ gophish_version }}-{{ gophish_platform }}-{{ gophish_arch }}.zip"
+gophish_download: "/opt/gophish-v{{ gophish_version }}-{{ gophish_platform }}-{{ gophish_arch }}.zip"
+gophish_destination: "/opt/gophish"
+gophish_logs: "/var/log/gophish"

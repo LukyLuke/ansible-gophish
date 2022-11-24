@@ -1,0 +1,7 @@
+*.kate-swp
+.vault-password
+roles/hispanico*
+roles/robertdebock*
+roles/geerlingguy*
+ansible.cfg
+vault.yml

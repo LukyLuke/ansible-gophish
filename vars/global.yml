@@ -1,0 +1,22 @@
+---
+
+# Domain and campaign
+# Campaign- and Admin-Domain is built like *_subdomain.domain
+domain: extensys.local
+admin_subdomain: gophish.customer
+campaign_subdomain: campaign.customer.ch
+
+
+# Global settings for ansible
+bootstrap_user: root
+ansible_os_family: Debian
+
+# Network configuration
+
+dns_server_ipv4: 10.99.5.2
+default_gateway: 10.99.5.1
+
+ipv4_nameserver_1: 208.67.222.222
+ipv4_nameserver_2: 208.67.220.220
+#ipv6_nameserver_1:
+#ipv6_nameserver_2:

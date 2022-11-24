@@ -1,0 +1,22 @@
+---
+
+# PostgreSQL
+vault_pg_user_dfir_iris: ""
+vault_pg_user_netbox: ""
+
+# DFIR-IRIS
+vault_iris_admin_pass: ""
+vault_iris_secret_key: ""
+vault_iris_pass_salt: ""
+
+# Netbox secret key
+vault_netbox_secret_key: ""
+vault_netbox_admin_pass: ""
+
+# RabbitMQ
+vault_rabbit_user_dfir_iris: ""
+vault_rabbit_user_admin: ""
+
+# Reddis
+vault_reddis_pass_default: ""
+vault_reddis_pass_netbox: ""

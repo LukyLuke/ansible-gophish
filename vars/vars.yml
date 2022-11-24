@@ -1,0 +1,6 @@
+---
+# Mapping from Vault variables to normal ones
+
+# Gophish
+gophish_admin_password: "{{ valut_gophish_admin_password }}"
+

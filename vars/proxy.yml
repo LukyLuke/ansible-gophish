@@ -1,0 +1,22 @@
+---
+
+use_letsencrypt: false
+
+nginx_revproxy_sites:
+  gophish:
+    domains:
+      - "{{ admin_subdomain }}.{{ domain }}"
+    upstreams:
+      - { backend_address: 127.0.0.1, backend_port: 3333 }
+    ssl: true
+    letsencrypt: "{{use_letsencrypt}}"
+    letsencrypt_email: "letsencrypt-gophish@extensys.ch"
+
+  campaign:
+    domains:
+      - "{{ campaign_subdomain }}.{{ domain }}"
+    upstreams:
+      - { backend_address: 127.0.0.1, backend_port: 8080 }
+    ssl: true
+    letsencrypt: "{{use_letsencrypt}}"
+    letsencrypt_email: "letsencrypt-gophish@extensys.ch"

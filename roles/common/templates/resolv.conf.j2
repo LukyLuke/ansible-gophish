@@ -1,0 +1,8 @@
+{{ ansible_managed | comment }}
+
+domain {{ domain }}
+search {{ domain }}
+nameserver {{ dns_server_ipv4 }}
+{% if dns_server_ipv6 is defined %}
+nameserver {{ dns_server_ipv6 }}
+{% endif %}

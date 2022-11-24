@@ -1,0 +1,27 @@
+---
+
+nginx_revproxy_certbot_auto: false
+nginx_revproxy_certbot_packages:
+  - certbot
+  - python3-certbot-nginx
+
+#proxy_hosts:
+#  - host1
+#  - host2
+proxy_hosts: []
+
+#nginx_revproxy_sites:
+#  nginx_revproxy_certbot_auto: false
+#  default:
+#    ssl: false
+#    letsencrypt: false
+#
+#  HOSTNAME:
+#    domains:
+#      - HOSTNAME
+#      - HOSTNAME.DOMAIN.TLD
+#    upstreams:
+#      - { backend_address: "IP.AD.DR.ES", backend_port: PORT }
+#    ssl: true
+#    letsencrypt: false
+nginx_revproxy_sites: []

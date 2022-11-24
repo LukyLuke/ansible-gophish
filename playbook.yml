@@ -1,0 +1,51 @@
+---
+# Main configuration of all hosts
+- name: System basics
+  hosts: all
+  become: yes
+  gather_facts: yes
+  vars_files:
+    - vars/vault.yml
+    - vars/vars.yml
+    - vars/global.yml
+  roles:
+    - role: common
+
+# Proxy
+- name: Proxy
+  hosts: proxy
+  become: yes
+  gather_facts: yes
+  vars_files:
+    - vars/vault.yml
+    - vars/vars.yml
+    - vars/global.yml
+    - vars/proxy.yml
+  roles:
+    - role: proxy
+
+# Mailrelay
+- name: Mailrelay
+  hosts: mailrelay
+  become: yes
+  gather_facts: yes
+  vars_files:
+    - vars/vault.yml
+    - vars/vars.yml
+    - vars/global.yml
+    - vars/mail.yml
+  roles:
+    - role: mail
+
+# Gophish
+- name: Gophish
+  hosts: gophish
+  become: yes
+  gather_facts: yes
+  vars_files:
+    - vars/vault.yml
+    - vars/vars.yml
+    - vars/global.yml
+    - vars/gophish.yml
+  roles:
+    - role: gophish

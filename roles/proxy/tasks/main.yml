@@ -1,0 +1,17 @@
+---
+
+- name: Install Nginx-Proxy
+  include_role:
+    name: hispanico.nginx_revproxy
+  tags:
+    - proxy
+
+# Restart NGINX due to reconfiguration
+- name: Restart NGINX configuration
+  service:
+    name: nginx
+    state: restarted
+  become: yes
+  tags:
+    - proxy
+    - config

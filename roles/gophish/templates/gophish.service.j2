@@ -1,0 +1,24 @@
+[Unit]
+Description=Gophish Phishing Simulation
+Documentation=https://docs.gophish.com/
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+
+User={{ gophish_user }}
+Group={{ gophish_user }}
+PIDFile=/var/tmp/gophish.pid
+WorkingDirectory={{ gophish_destination }}
+
+ExecStart={{ gophish_destination }}/gophish
+StandardOutput=append:{{ gophish_logs }}/gophish.log
+StandardError=append:{{ gophish_logs }}/gophish_error.log
+
+Restart=on-failure
+RestartSec=30
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

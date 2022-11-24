@@ -1,0 +1,8 @@
+---
+
+- name: Postfix install
+  include_role:
+    name: geerlingguy.postfix
+  tags:
+    - mailrelay
+    - mail

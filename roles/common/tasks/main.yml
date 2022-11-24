@@ -1,0 +1,37 @@
+---
+- name: Deploy resolv.conf
+  template:
+    src: resolv.conf.j2
+    dest: /etc/resolv.conf
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  tags:
+    - system
+    - install
+
+- name: Install base packages
+  package:
+    name:
+      - acl
+      - dnsutils
+      - netcat
+      - traceroute
+      - net-tools
+    state: present
+    update_cache: yes
+  tags:
+    - system
+    - install
+
+- name: Upgrade system
+  apt:
+    upgrade: dist
+    autoremove: yes
+    update_cache: yes
+  tags:
+    - system
+    - update
+  notify:
+    - check reboot Server

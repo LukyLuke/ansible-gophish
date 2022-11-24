@@ -1,0 +1,9 @@
+
+[proxy]
+proxy1 ansible_host=10.99.5.199 dns_server_ipv4=8.8.8.8
+
+[mailrelay]
+mail1 ansible_host=10.99.5.199
+
+[gophish]
+gophish1 ansible_host=10.99.5.199
